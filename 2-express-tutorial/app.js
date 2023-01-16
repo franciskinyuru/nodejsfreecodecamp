@@ -1,55 +1,17 @@
-const http = require('http')
-const {readFileSync} = require('fs')
-// get all files
-const homePage = readFileSync('./navbar-app/index.html')
-const homeStyle = readFileSync('./navbar-app/styles.css')
-const homeImage = readFileSync('./navbar-app/logo.svg')
-const homeLogic = readFileSync('./navbar-app/browser-app.js')
+const express = require('express')
+const path = require('path')
+const app = express()
+// setup static and middleware
+app.use('/public',express.static(__dirname + "/public"));
 
-const server = http.createServer((req, res)=>{
-    //console.log(req.method);
-    const url =req.url
-    console.log(url);
-    if(url == '/'){
-    res.writeHead(200,{'content-type':'text/html'})
-    res.write(homePage)
-    res.end()
-    }
-    
-    //about
-    else if(url =="/about"){
-    res.writeHead(200,{'content-type':'text/html'})
-    res.write('<h1>About page</h1>')
-    res.end()
-    }
-
-    //styles
-    else if(url =="/styles.css"){
-        res.writeHead(200,{'content-type':'text/css'})
-        res.write(homeStyle)
-        res.end()
-        }
-        //logo
-         //styles
-    else if(url =="/logo.svg"){
-        res.writeHead(200,{'content-type':'image/svg+xml'})
-        res.write(homeImage)
-        res.end()
-        }
-    // js
-     //styles
-     else if(url =="/browser-app.js"){
-        res.writeHead(200,{'content-type':'text/javascript'})
-        res.write(homeLogic)
-        res.end()
-        } 
-    //404
-    else{
-    res.writeHead(404,{'content-type':'text/html'})
-    res.write('<h1>Oops! Not Found </h1>')
-    res.end()
-    }
-    
+app.get('/', (req, res)=>{
+    res.sendFile(path.resolve(__dirname, './navbar-app/index.html'))
 })
-server.listen(4000)
+app.get('*', (req, res)=>{
+    res.status(404).send('Resource not found')
+})
 
+app.listen(5001, ()=>{
+    console.log('server is listening in port 5001');
+})
+ 
