@@ -28,26 +28,7 @@ app.get('/api/products/:productID', (req, res)=>{
 app.get('/api/products/:productID/reviews/:reviewID',(req, res)=>{
     console.log(req.params);
     res.send('check reviews');
-})
 
-app.get('/api/v1/query', (req, res)=>{
-    console.log(req.query);
-    const {search, limit} = req.query
-    let sortedProducts = [...products];
-    if(search){
-        sortedProducts = sortedProducts.filter((product)=>{
-            return product.name.startsWith(search)
-        })
-    }
-    if(limit){
-        sortedProducts = sortedProducts.slice(0,Number(limit))
-    }
-    if(sortedProducts.length<1){
-        //res.status(200).send('No products much your search');
-        return res.status(200).json({success:true, data:[ ]})
-    }
-    return res.status(200).json(sortedProducts)
-    //res.send('New details here ');
 })
 app.listen(5001, ()=>{
     console.log("Server running on 5001");
