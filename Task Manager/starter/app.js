@@ -4,6 +4,7 @@ const path = require('path')
 const tasks = require('./routes/tasks')
 const connectDB = require('./db/connect')
 require('dotenv').config()
+const notFound = require('./middleware/not-found')
 
 //surf static files
 
@@ -11,6 +12,7 @@ app.use(express.static(path.join(__dirname+'/public')))
 
 // middleware
 app.use(express.json())
+app.use(notFound)
 
 // routes
 app.use('/api/v1/tasks', tasks)
