@@ -22,7 +22,6 @@ app.get('/', (req, res) =>{
 //product routes
 app.use('/api/v1/products', procuctsRouter)
 
-
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
 
